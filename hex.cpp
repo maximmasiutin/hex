@@ -1,10 +1,10 @@
 /*
 
-ASCII Hexagonal Grid HEX Board Game v1.3 (with Monte-Carlo AI)
+ASCII Hexagonal Grid HEX Board Game v1.4 (with Monte-Carlo AI)
 
-Copyright 2020-2021 Maxim Masiutin. All rights reserved.
+Copyright 2020-2025 Maxim Masiutin. All rights reserved.
 
-2021-04-07
+2025-11-23
 
 This program is distributed under the GNU GPL v2.0
 
@@ -28,8 +28,8 @@ The Monte-Carlo simulation is implemented very efficiently, so it takes just
 about a second to make a move from a million trials on an average notebook on
 a 7x7 field, or about 5 seconds on an 11x11 field.
 
-This is a pure Monte-Carlo implementation, without any the min-max algorithm
-or the alpha-beta pruning.
+This is a pure Monte-Carlo implementation, without the min-max algorithm
+or alpha-beta pruning.
 
 The computer can play HEX intelligently against a human on an 11 by 11 board,
 and it only takes a few seconds for the computer to make the intelligent move.
@@ -103,10 +103,10 @@ user again to make a move.
 
 
 
-// Holds whether a cell is emplty (no move done yet) or it is occupied by either Red or Blue player
+// Holds whether a cell is empty (no move done yet) or it is occupied by either Red or Blue player
 enum class CellValue : uint8_t { Blank, Blue, Red };
 
-// The Filed class holds 2-dimensional array of cells that keep players' moves, when the moves are made
+// The Field class holds a 2-dimensional array of cells that store players' moves
 class Field {
 public:
     const unsigned int width;
@@ -571,21 +571,21 @@ public:
     {
         typename EdgeLayoutMap::iterator map_iter;
 
-        // delete the edge from x to y
+        // delete the edge from a to b
         map_iter = Edges.find(a);
         if (map_iter != Edges.end())
         {
-            map_iter->erase(b);
-            if (map_iter->empty())
+            map_iter->second.erase(b);
+            if (map_iter->second.empty())
                 Edges.erase(map_iter); // erase the empty set from the map by the iterator which points to the empty set
         }
 
-        // delete the edge from y to x
+        // delete the edge from b to a
         map_iter = Edges.find(b);
         if (map_iter != Edges.end())
         {
-            map_iter->erase(a);
-            if (map_iter->empty())
+            map_iter->second.erase(a);
+            if (map_iter->second.empty())
                 Edges.erase(map_iter);
         }
 
@@ -752,7 +752,7 @@ discovered.
                 return;
             }
 
-            // we have walked throuhg all reachable nodes
+            // we have walked through all reachable nodes
             total_nodes_walked = closed_set.size();
         }
 
@@ -925,7 +925,7 @@ public:
     }
 };
 
-// Check whether there is a winning path exists according to the rules of the HEX game, using a conventionag graph and the Dijkstra's algorithm
+// Check whether a winning path exists according to the rules of the HEX game, using a conventional graph and Dijkstra's algorithm
 bool is_game_won(const Field& field, const CellValue mark, const bool start_stop_edges_vertical, const BoardIncline board_incline)
 {
     using MyNodeType = uint8_t;
@@ -952,7 +952,7 @@ bool is_game_won(const Field& field, const CellValue mark, const bool start_stop
 
 /******************************************************************************
 The classes that implement the computer's moves.
-(1) The basic abstract clsss
+(1) The basic abstract class
 (2) The ComputerMoveRandom that just uses a random generator to make an arbitrary move
 (3) The ComputerMoveAI that uses Monte-Carlo simulation to make a better move
 *******************************************************************************/
@@ -1300,7 +1300,7 @@ nodes ("open set") and don't track visited nodes ("closed set") separately.
                 switch (board_incline)
                 {
                 case BoardIncline::rect:
-                    // use non-conventionaly-calculated coordinates for the 5th and 6th nodes
+                    // use non-conventionally-calculated coordinates for the 5th and 6th nodes
                     if (is_odd_NodeCoord(x)) // is odd
                     {
                         if (y + 1 < AiFieldSideLength)
@@ -1846,7 +1846,7 @@ int main()
         board_type = input_board_type_compact_grid;
     }
 
-    // configurabe variables
+    // configurable variables
     int cell_scale = 1;   // the "scale factor" of a single cell as drawn in ASCII characters, e.g. 1 for smallest cell, 2 for a larger cell, 3 for even larger, etc ...
 
     // smaller the board, larger the cells

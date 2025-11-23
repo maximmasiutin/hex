@@ -1,8 +1,8 @@
-ASCII Hexagonal Grid HEX Board Game v1.3 (with Monte-Carlo AI)
+ASCII Hexagonal Grid HEX Board Game v1.4 (with Monte-Carlo AI)
 
-Copyright 2020-2021 Maxim Masiutin. All rights reserved.
+Copyright 2020-2025 Maxim Masiutin. All rights reserved.
 
-2021-04-07
+2025-11-23
 
 This program is distributed under the GNU GPL v2.0
 

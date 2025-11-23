@@ -1,0 +1,16 @@
+FROM gcc:11
+
+WORKDIR /app
+
+# Copy source files
+COPY hex.cpp .
+COPY tests.cpp .
+
+# Compile main program
+RUN g++ -std=c++11 -O2 -Wall -Wextra -o hex hex.cpp
+
+# Compile tests
+RUN g++ -std=c++11 -O2 -Wall -Wextra -o tests tests.cpp
+
+# Default command runs tests
+CMD ["./tests"]
