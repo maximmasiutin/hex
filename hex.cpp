@@ -158,7 +158,7 @@ Console draw helper classes
 
 inline bool is_odd_uint(const unsigned int a) // just returns whether an integer number is odd, i.e. is 1, 3, etc...
 {
-    return a & 1;
+    return (a & 1) != 0u;
 }
 
 /* The "incline" only affects how the adjacent hexagons are connected and how
