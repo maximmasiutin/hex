@@ -1956,11 +1956,11 @@ int main() {
         if (row < first_row_base)
           continue;
 
-        bool column_valid = column >= first_column_base;
-        bool row_valid = row >= first_row_base;
-        unsigned int ux = column_valid ? column - first_column_base : 0;
-        unsigned int uy = row_valid ? row - first_row_base : 0;
-        if (!column_valid || !row_valid || field.coord_out_of_range_xy(ux, uy)) {
+        // column >= first_column_base and row >= first_row_base are guaranteed
+        // by the continue statements above
+        unsigned int ux = column - first_column_base;
+        unsigned int uy = row - first_row_base;
+        if (field.coord_out_of_range_xy(ux, uy)) {
           std::cout << "Invalid coordinates entered (" << row << "," << column
                     << ") Row should be between 1 and " << field.width
                     << "; column should be between 1 and " << field.height
