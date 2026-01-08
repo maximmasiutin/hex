@@ -107,14 +107,14 @@ issues.
 Pre-built images are available on DockerHub. Choose the version matching your
 CPU:
 
-**For newer Intel processors (Sapphire Rapids and later):**
+**For newer Intel processors (released around 2025 or later):**
 
     docker run -it --rm maximmasiutin/hex:sapphirerapids
 
 This version uses GCC 15 and targets Intel Sapphire Rapids microarchitecture,
-taking advantage of newer instruction sets including AVX-512.
+taking advantage of newer instruction sets.
 
-**For older Intel processors (Skylake and later):**
+**For older Intel processors (released around 2016 or later):**
 
     docker run -it --rm maximmasiutin/hex:skylake
 
