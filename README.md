@@ -15,18 +15,18 @@ The game rules were first described by the mathematician and poet Piet Hein in
 This program implements Monte-Carlo simulation to get a good move for a
 computer player.
 
-Each legal move will be evaluated using a million (1,000,000) of trials. See
+Each legal move will be evaluated using a million (1,000,000) trials. See
 the "monte_carlo_iterations" variable to configure this value.
 
 Each trial winds the game forward by randomly selecting successive moves until
 there is a winner, and the trial is counted as a win or loss. The ratio:
-wins/trials are the AI's metric for picking which next move to make.
+wins/trials is the AI's metric for picking which next move to make.
 
 The Monte-Carlo simulation is implemented very efficiently, so it takes just
 about a second to make a move from a million trials on an average notebook on
 a 7x7 field, or about 5 seconds on an 11x11 field.
 
-This is a pure Monte-Carlo implementation, without any the min-max algorithm
+This is a pure Monte-Carlo implementation, without the min-max algorithm
 or the alpha-beta pruning.
 
 The computer can play HEX intelligently against a human on an 11 by 11 board,
@@ -84,6 +84,47 @@ the winner, and it does so immediately.
 
 The program uses a straightforward method to input players' moves. That is, it
 lets the player enter the (x, y) coordinates corresponding to the currently
-empty cell column (x) and row (y). After the user entered the move, the
+empty cell column (x) and row (y). After the user enters the move, the
 program checks whether this is a legal move, and if not, the program asks the
 user again to make a move.
+
+## Building and Testing with Docker
+
+Several Dockerfiles are provided for different purposes:
+
+### Testing (syntax check and unit tests)
+
+Build and run unit tests:
+
+    docker build -f Dockerfile.test -t hex-test .
+    docker run --rm hex-test
+
+The test Dockerfile compiles with -O1 -Wall -Wextra flags to catch potential
+issues.
+
+### Playing the game
+
+Pre-built images are available on DockerHub. Choose the version matching your
+CPU:
+
+**For newer Intel processors (Sapphire Rapids and later):**
+
+    docker run -it --rm maximmasiutin/hex:sapphirerapids
+
+This version uses GCC 15 and targets Intel Sapphire Rapids microarchitecture,
+taking advantage of newer instruction sets including AVX-512.
+
+**For older Intel processors (Skylake and later):**
+
+    docker run -it --rm maximmasiutin/hex:skylake
+
+This version uses GCC 12 and targets Intel Skylake microarchitecture.
+
+Note: Use -it flags for interactive play (required for keyboard input).
+
+### Building locally
+
+To build the Docker images locally instead of pulling from DockerHub:
+
+    docker build -f Dockerfile.sapphirerapids -t hex-sapphirerapids .
+    docker build -f Dockerfile.skylake -t hex-skylake .

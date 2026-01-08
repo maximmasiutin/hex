@@ -1,0 +1,15 @@
+FROM gcc:12.5.0-bookworm
+
+WORKDIR /app
+
+# Copy source file
+COPY hex.cpp .
+
+# Compile for Skylake (older Intel processors)
+RUN g++ -std=c++11 -O3 -march=skylake -o hex hex.cpp
+
+# Run as non-root user
+USER nobody
+
+# Default command runs the game
+CMD ["./hex"]

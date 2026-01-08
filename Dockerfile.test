@@ -1,4 +1,4 @@
-FROM gcc:11
+FROM gcc:12.5.0-bookworm
 
 WORKDIR /app
 
@@ -7,10 +7,10 @@ COPY hex.cpp .
 COPY tests.cpp .
 
 # Compile main program
-RUN g++ -std=c++11 -O2 -Wall -Wextra -o hex hex.cpp
+RUN g++ -std=c++11 -O1 -Wall -Wextra -o hex hex.cpp
 
 # Compile tests
-RUN g++ -std=c++11 -O2 -Wall -Wextra -o tests tests.cpp
+RUN g++ -std=c++11 -O1 -Wall -Wextra -o tests tests.cpp
 
 # Run as non-root user
 USER nobody
